@@ -41,7 +41,7 @@ public class Laser : MonoBehaviour {
             lineRenderer.SetPosition (index++, origin);
         if (index >= lineRenderer.positionCount)
             return;
-        Vector3 targetPos = direction * laserRange;
+        Vector3 targetPos = origin + (direction * laserRange);
         lineRenderer.SetPosition (index++, targetPos);
 
         for (int i = index; i < lineRenderer.positionCount; i++)

@@ -19,14 +19,29 @@ public class VFXSpawner : MonoBehaviour {
     }
 
     void Update () {
+
+#if UNITY_STANDALONE || UNITY_EDITOR
         if (Input.GetMouseButton (0) && Time.time >= canFireProjectile) {
             canFireProjectile = Time.time + (1f / projectileFireRate);
             SpawnProjectile ();
-        } else if (Input.GetKeyDown (KeyCode.Space)) {
+        }
+        if (Input.GetKeyDown (KeyCode.Space)) {
             ActivateLaser ();
         } else if (Input.GetKeyUp (KeyCode.Space)) {
             DeactivateLaser ();
         }
+
+#elif UNITY_ANDROID
+        if (Input.GetMouseButtonDown (0) && Time.time >= canFireProjectile) {
+            canFireProjectile = Time.time + (1f / projectileFireRate);
+            SpawnProjectile ();
+        }
+        if (Input.GetMouseButton (0)) {
+            ActivateLaser ();
+        } else if (Input.GetMouseButtonUp (0)) {
+            DeactivateLaser ();
+        }
+#endif
     }
 
     void SpawnProjectile () {
